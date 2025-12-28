@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+venv/
+ENV/
+.env/
+.venv/
+
+# Environment variables and secrets
+.env
+*.env
+
+# Jupyter and notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache and test data
+backend/cache/
+backend/cache/market_data.json
+
+# Dev/test scripts and outputs
+*.log
+
+# Ignore test/utility files (optional, comment out if needed)
+# backend/streaming/test_kafka.py
+# backend/streaming/kafka_test_consumer.py
+# backend/services/test_alpha.py
+
+# Node/npm (if any frontend JS work)
+node_modules/
+
+# Misc
+*.bak
+*.swp
+*.tmp

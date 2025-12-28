@@ -1,0 +1,40 @@
+# -------------------------------
+# Core Backend
+# -------------------------------
+flask
+flask-cors
+python-dotenv
+
+# -------------------------------
+# Scheduling (15 min fetch)
+# -------------------------------
+APScheduler
+
+# -------------------------------
+# Data Fetching
+# -------------------------------
+requests
+yfinance
+
+# -------------------------------
+# Streaming (Confluent Kafka)
+# -------------------------------
+confluent-kafka
+
+# -------------------------------
+# Data Handling
+# -------------------------------
+pandas
+numpy
+
+# -------------------------------
+# Sentiment / NLP (keep for later stages)
+# -------------------------------
+transformers
+torch
+sentencepiece
+
+# -------------------------------
+# Optional (safe to keep)
+# -------------------------------
+scikit-learn
