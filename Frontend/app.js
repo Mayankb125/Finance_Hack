@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5050/api/signals";
+const API_URL = "http://localhost:5051/api/signals";
 const tbody = document.getElementById("signals-body");
 
 function signalClass(signal) {
