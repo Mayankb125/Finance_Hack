@@ -3,7 +3,7 @@ import json
 import threading
 from datetime import datetime
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from confluent_kafka import Consumer
@@ -16,8 +16,11 @@ app = Flask(__name__)
 # ✅ VERY IMPORTANT: allow CORS
 socketio = SocketIO(
     app,
-    cors_allowed_origins="*",     # 🔥 FIX
-    async_mode="threading"
+    cors_allowed_origins="*",
+    async_mode="threading",
+    logger=True,
+    engineio_logger=False,
+    allow_unsafe_werkzeug=True  # Fix for development server WebSocket issues
 )
 
 # ------------------ Kafka Config ------------------
@@ -82,6 +85,21 @@ def consume_kafka():
 
 # Run Kafka consumer in background
 threading.Thread(target=consume_kafka, daemon=True).start()
+
+
+# ------------------ Socket.IO Event Handlers ------------------
+@socketio.on('connect')
+def handle_connect():
+    print(f"✅ Client connected: {request.sid}")
+    # Send cached signals to newly connected client
+    with _cache_lock:
+        if LATEST_SIGNALS:
+            for signal in LATEST_SIGNALS.values():
+                socketio.emit("signal", signal, room=request.sid)
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print(f"❌ Client disconnected: {request.sid}")
 
 
 # ------------------ HTTP Endpoints (Judge-Friendly) ------------------

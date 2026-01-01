@@ -3,6 +3,7 @@
 # -------------------------------
 flask
 flask-cors
+flask-socketio
 python-dotenv
 
 # -------------------------------
@@ -38,3 +39,9 @@ sentencepiece
 # Optional (safe to keep)
 # -------------------------------
 scikit-learn
+
+# -------------------------------
+# Google Vertex AI (Optional - for AI explanations)
+# -------------------------------
+google-cloud-aiplatform
+google-auth

@@ -5,6 +5,12 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
 
 # =====================
 # Virtual Environments
@@ -18,8 +24,13 @@ ENV/
 # =====================
 .env
 *.env
+.env.local
+.env.*.local
 gcp_service_account.json
 *.key
+*.pem
+credentials.json
+service-account*.json
 
 # =====================
 # Jupyter
@@ -40,8 +51,9 @@ Thumbs.db
 # =====================
 # Backend Cache / Data
 # =====================
-Backend/cache/
-Backend/cache/market_data.json
+backend/cache/
+backend/cache/*.json
+*.json.bak
 
 # =====================
 # Logs

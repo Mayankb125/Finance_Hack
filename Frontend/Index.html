@@ -2,130 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>📈 Live Market Signals</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css" />
 
     <!-- Socket.IO Client -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: #e5e7eb;
-            padding: 20px;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-        }
-
-        .status {
-            margin-bottom: 12px;
-            font-size: 14px;
-            color: #94a3b8;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #020617;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        th {
-            background: #020617;
-            color: #93c5fd;
-        }
-
-        tr.buy {
-            background-color: rgba(34, 197, 94, 0.15);
-        }
-
-        tr.sell {
-            background-color: rgba(239, 68, 68, 0.15);
-        }
-
-        tr.neutral {
-            background-color: rgba(148, 163, 184, 0.12);
-        }
-    </style>
 </head>
 <body>
 
-<h1>📈 Live Market Signals</h1>
-<div class="status" id="status">🔌 Connecting to WebSocket…</div>
+<div class="container">
+    <div class="header-container">
+        <h1>📈 Live Market Signals</h1>
+        <button onclick="refreshData()" id="refreshBtn" class="refresh-btn">🔄 Refresh</button>
+    </div>
+    <div class="status" id="status">🔌 Connecting to WebSocket…</div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Symbol</th>
-            <th>Price</th>
-            <th>Signal</th>
-            <th>Confidence</th>
-            <th>Reason</th>
-        </tr>
-    </thead>
-    <tbody id="signals-body">
-        <!-- Live data rows -->
-    </tbody>
-</table>
+    <table>
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Change</th>
+                <th>Sentiment</th>
+                <th>Signal</th>
+                <th>Confidence</th>
+                <th>Reason</th>
+                <th>AI Explanation</th>
+            </tr>
+        </thead>
+        <tbody id="signals-body">
+            <tr><td colspan="8" class="loading">Loading signals...</td></tr>
+        </tbody>
+    </table>
+</div>
 
-<script>
-    // ✅ CONNECT TO FLASK SOCKET.IO BACKEND
-    const socket = io("http://localhost:5051", {
-        transports: ["websocket"],
-    });
-
-    const statusEl = document.getElementById("status");
-    const tbody = document.getElementById("signals-body");
-
-    // Keep one row per symbol
-    const rows = {};
-
-    socket.on("connect", () => {
-        console.log("✅ WebSocket connected");
-        statusEl.textContent = "✅ Connected to live market stream";
-    });
-
-    socket.on("disconnect", () => {
-        console.warn("❌ WebSocket disconnected");
-        statusEl.textContent = "❌ Disconnected from server";
-    });
-
-    // 🔥 THIS MUST MATCH socketio.emit("signal", data)
-    socket.on("signal", (data) => {
-        console.log("📈 SIGNAL RECEIVED", data);
-
-        const symbol = data.symbol ?? "N/A";
-        const price = data.price ?? "-";
-        const signal = data.signal ?? "NEUTRAL";
-        const confidence = data.confidence ?? "-";
-        const reason = data.reason ?? "-";
-
-        let row = rows[symbol];
-
-        if (!row) {
-            row = document.createElement("tr");
-            rows[symbol] = row;
-            tbody.prepend(row);
-        }
-
-        row.className = signal.toLowerCase();
-
-        row.innerHTML = `
-            <td>${symbol}</td>
-            <td>${price}</td>
-            <td><b>${signal}</b></td>
-            <td>${confidence}</td>
-            <td>${reason}</td>
-        `;
-    });
-</script>
+<!-- External JavaScript -->
+<script src="app.js"></script>
 
 </body>
 </html>

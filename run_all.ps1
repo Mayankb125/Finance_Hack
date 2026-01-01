@@ -45,11 +45,12 @@ Start-Sleep -Seconds 1
 Start-AgentTerminal -Title 'Dashboard API (Socket.IO)' -PyCommand 'python backend/app.py'
 Start-Sleep -Seconds 2
 
-# Producer: once (demo) or continuous
+# Producer: continuous mode by default (auto-updates every 15 minutes)
+# Use -ProducerOnce flag if you want to run just once
 if ($ProducerOnce) {
     Start-AgentTerminal -Title 'Kafka Producer (once)' -PyCommand 'python backend/streaming/kafka_producer.py --once'
 } else {
-    Start-AgentTerminal -Title 'Kafka Producer (continuous)' -PyCommand ("python backend/streaming/kafka_producer.py --interval-minutes $IntervalMinutes")
+    Start-AgentTerminal -Title 'Kafka Producer (continuous - auto-updates every 15 min)' -PyCommand ("python backend/streaming/kafka_producer.py --interval-minutes $IntervalMinutes")
 }
 
 Write-Host "============================================================"

@@ -108,15 +108,28 @@ class MarketSignalEngine:
         # --------------------------------------------------------------
         # Vertex AI explanation (SAFE, non-blocking)
         # --------------------------------------------------------------
-        try:
-            ai_explanation = get_gemini_explanation(
-                symbol=symbol,
-                price=price,
-                sentiment=sentiment,
-                signal=signal
-            )
-        except Exception:
-            ai_explanation = "AI explanation unavailable"
+        ai_explanation = "AI explanation unavailable"
+        if VERTEX_AVAILABLE:
+            try:
+                # Extract news from enriched data
+                news = data.get("news", [])
+                ai_explanation = get_gemini_explanation(
+                    symbol=symbol,
+                    price=price,
+                    sentiment=sentiment,
+                    news=news,
+                    price_change=price_change,
+                    signal=signal
+                )
+                if not ai_explanation or ai_explanation.startswith("[Vertex AI"):
+                    print(f"[WARN] Vertex AI returned: {ai_explanation}")
+            except Exception as e:
+                print(f"[WARN] Vertex AI explanation failed: {type(e).__name__}: {e}")
+                import traceback
+                traceback.print_exc()
+                ai_explanation = f"AI explanation unavailable: {str(e)[:100]}"
+        else:
+            print("[INFO] Vertex AI not available (module not imported)")
 
         return {
             "symbol": symbol,

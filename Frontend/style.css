@@ -1,9 +1,9 @@
 * {
     box-sizing: border-box;
-    font-family: "Segoe UI", sans-serif;
 }
 
 body {
+    font-family: "Segoe UI", Arial, sans-serif;
     background: linear-gradient(135deg, #0f172a, #020617);
     color: #e5e7eb;
     margin: 0;
@@ -11,13 +11,52 @@ body {
 }
 
 .container {
-    max-width: 1100px;
-    margin: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    color: #e5e7eb;
+    margin: 0;
+}
+
+.status {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #94a3b8;
+    text-align: center;
+    padding: 10px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 8px;
+}
+
+.refresh-btn {
+    padding: 10px 20px;
+    background: #1e293b;
+    color: #93c5fd;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+    background: #334155;
+}
+
+.refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 table {
@@ -26,61 +65,111 @@ table {
     background: #020617;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 thead {
     background: #020617;
-    border-bottom: 1px solid #1f2933;
+    border-bottom: 2px solid #1f2933;
 }
 
 th, td {
     padding: 14px;
     text-align: center;
-}
-
-th {
-    color: #93c5fd;
-    font-weight: 600;
-}
-
-tbody tr {
     border-bottom: 1px solid #1f2933;
 }
 
-tbody tr:hover {
+th {
     background: #020617;
+    color: #93c5fd;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
 }
 
-/* SIGNAL COLORS */
+tbody tr {
+    transition: background-color 0.2s;
+}
+
+tbody tr:hover {
+    background: rgba(15, 23, 42, 0.5);
+}
+
+tr.buy {
+    background-color: rgba(34, 197, 94, 0.15);
+}
+
+tr.sell {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+tr.neutral {
+    background-color: rgba(148, 163, 184, 0.12);
+}
+
 .signal-buy {
     color: #22c55e;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .signal-sell {
     color: #ef4444;
     font-weight: bold;
+    font-size: 16px;
 }
 
 .signal-neutral {
     color: #facc15;
     font-weight: bold;
+    font-size: 16px;
 }
 
-/* CONFIDENCE BAR */
 .confidence-bar {
     height: 10px;
     background: #1f2933;
     border-radius: 5px;
     overflow: hidden;
+    margin: 5px auto;
+    max-width: 100px;
 }
 
 .confidence-fill {
     height: 100%;
     background: linear-gradient(90deg, #22c55e, #16a34a);
+    transition: width 0.3s;
+}
+
+.confidence-percent {
+    margin-top: 4px;
+    font-size: 11px;
+}
+
+.change-positive {
+    color: #22c55e;
+}
+
+.change-negative {
+    color: #ef4444;
+}
+
+.ai-explanation {
+    font-size: 12px;
+    color: #94a3b8;
+    font-style: italic;
+    max-width: 300px;
+    text-align: left;
+    margin: 0 auto;
 }
 
 .loading {
     text-align: center;
     color: #9ca3af;
+    padding: 20px;
+}
+
+.timestamp {
+    font-size: 11px;
+    color: #64748b;
 }

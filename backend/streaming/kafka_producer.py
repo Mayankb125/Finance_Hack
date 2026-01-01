@@ -3,7 +3,7 @@ import json
 import os
 import sys
 import argparse
-from datetime import datetime
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from confluent_kafka import Producer
 
@@ -33,8 +33,9 @@ class MarketKafkaProducer:
         print("============================================================")
         print("🚀 Market Streaming Backend Started")
         print("🔗 Mode: Alpha Vantage → Kafka")
-        print("⏱ Fetch interval: 15 minutes")
+        print("⏱ Fetch interval: 15 minutes (continuous mode)")
         print(f"🕒 Start time (UTC): {datetime.utcnow().isoformat()}")
+        print("📊 Tracking stocks: " + str(len(self.market_service.stocks)))
         print("============================================================")
 
     def delivery_report(self, err, msg):
@@ -64,9 +65,21 @@ class MarketKafkaProducer:
         print(f"✅ Streamed {len(stocks)} stocks to Kafka")
 
     def run_forever(self, interval_minutes=15):
+        cycle_count = 0
         while True:
+            cycle_count += 1
+            print(f"\n{'='*60}")
+            print(f"🔄 CYCLE #{cycle_count} - Auto-updating all stocks...")
+            print(f"{'='*60}\n")
+            
             self.stream_once()
-            print(f"⏳ Sleeping for {interval_minutes} minutes...\n")
+            
+            next_update = datetime.utcnow() + timedelta(minutes=interval_minutes)
+            print(f"\n✅ Cycle #{cycle_count} completed successfully")
+            print(f"⏳ Next auto-update in {interval_minutes} minutes")
+            print(f"🕒 Next update time: {next_update.strftime('%Y-%m-%d %H:%M:%S')} UTC")
+            print(f"{'='*60}\n")
+            
             time.sleep(interval_minutes * 60)
 
 
